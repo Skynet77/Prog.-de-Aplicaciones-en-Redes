@@ -12,17 +12,17 @@ package py.una.pol.par.entidades;
 public class Producto implements Comparable<Producto>{
     private int id_producto;
     private Categoria categoria;
-    private int precio;
+    private int precio_unidad;
     private String descripcion;
     private int cantidad;
 
     public Producto() {
     }
 
-    public Producto(int id_produto, Categoria categoria, int precio, String descripcion, int cantidad) {
+    public Producto(int id_produto, Categoria categoria, int precio_unidad, String descripcion, int cantidad) {
         this.id_producto = id_produto;
         this.categoria = categoria;
-        this.precio = precio;
+        this.precio_unidad = precio_unidad;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
     }
@@ -44,11 +44,11 @@ public class Producto implements Comparable<Producto>{
     }
     
     public int getPrecio() {
-        return precio;
+        return precio_unidad;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setPrecio(int precio_unidad) {
+        this.precio_unidad = precio_unidad;
     }
     
     public String getDescripcion() {
@@ -64,13 +64,13 @@ public class Producto implements Comparable<Producto>{
     }
 
     public void setCantidad(int cantidad) {
-        this.precio = cantidad;
+        this.cantidad = cantidad;
     }
 
     @Override
     public String toString() {
         return "Producto{" + "id_produto=" + id_producto + ", id_categoria=" +
-                categoria + ", precio=" + precio + ", descripcion=" + descripcion +
+                categoria + ", precio=" + precio_unidad + ", descripcion=" + descripcion +
                 ", cantidad=" + cantidad + '}';
     }
 

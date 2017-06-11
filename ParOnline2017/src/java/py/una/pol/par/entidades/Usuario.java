@@ -17,7 +17,7 @@ public class Usuario {
     private int id_usuario;
     private String nombre;
     private String apellido;
-    private int tipo_usuario;
+    private int tipo_usuario; //0 Admin, 1 Usuario normal 
     private String login_name;
     private String contrasenha;
     

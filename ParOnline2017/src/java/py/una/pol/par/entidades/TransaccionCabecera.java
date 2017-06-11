@@ -17,19 +17,22 @@ public class TransaccionCabecera {
     private int id_transaccion;
     private Usuario usuario;
     private ArrayList<TransaccionDetalles> contenido;
+    private String fecha;
     private int total_a_pagar;
     private String direccion;
     private String forma_pago;
-    private String fecha;
+    private int nro_tarjeta;
+    private String estado;
 
     public TransaccionCabecera() {
     }
 
-    public TransaccionCabecera(int id_transaccion, Usuario usuario, ArrayList<TransaccionDetalles> contenido, String fecha) {
+    public TransaccionCabecera(int id_transaccion, Usuario usuario, ArrayList<TransaccionDetalles> contenido, String fecha, String estado) {
         this.id_transaccion = id_transaccion;
         this.usuario = usuario;
         this.contenido = contenido;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     public String getFecha() {
@@ -89,5 +92,21 @@ public class TransaccionCabecera {
 
     public void setUsuario(Usuario cliente) {
         this.usuario = cliente;
+    }
+    
+    public int getNro_tarjeta(){
+        return nro_tarjeta;
+    }
+    
+    public void setNro_tarjeta(int nro_tarjeta){
+        this.nro_tarjeta = nro_tarjeta;
+    }
+    
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

@@ -28,7 +28,7 @@ public class ProductoManager {
         try {
             conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
             pstmt = conn.prepareStatement("insert into producto (id_producto, "
-                    + "id_categoria, precio, descripcion, cantidad) values (?,?,?,?,?)");
+                    + "id_categoria, descripcion, precio_unidad , cantidad) values (?,?,?,?,?)");
             pstmt.setInt(1, p.getId_producto());
             pstmt.setInt(2, p.get_categoria().getId_categoria());
             pstmt.setInt(3, p.getPrecio());
@@ -58,7 +58,7 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
-            pstmt = conn.prepareStatement("update producto set precio = ?, "
+            pstmt = conn.prepareStatement("update producto set precio_unidad = ?, "
                     + "descripcion = ?, id_categoria = ?, cantidad = ? where id_producto = ? ");
             pstmt.setInt(1, p.getPrecio());
             pstmt.setString(2, p.getDescripcion());
@@ -133,8 +133,8 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_producto, id_categoria, precio, descripcion, "
-                    + " cantidad from producto");
+            pstmt = conn.prepareStatement("select id_producto, id_categoria, descripcion,"
+                    + " precio_unidad, cantidad from producto");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Producto p = new Producto();
@@ -162,8 +162,8 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_producto, descripcion, id_categoria, precio"
-                    + ", cantidad from producto where id_producto = ?");
+            pstmt = conn.prepareStatement("select id_producto, id_categoria, descripcion, "
+                    + "precio_unidad, cantidad from producto where id_producto = ?");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery(); //un objto que puede soportar una tabla de resultado ejecutar consulta
             if (rs.next()) {
@@ -192,8 +192,8 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_producto, descripcion, id_categoria, precio"
-                    + ", cantidad from producto where id_categoria = ?");
+            pstmt = conn.prepareStatement("select id_producto, id_categoria, descripcion, "
+                    + "precio_unidad, cantidad from producto where id_categoria = ?");
             pstmt.setInt(1, categoria);
             rs = pstmt.executeQuery();
             while (rs.next()) {

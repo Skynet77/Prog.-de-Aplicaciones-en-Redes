@@ -31,7 +31,7 @@ public class UsuarioManager {
             try {
                 conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
                 pstmt = conn.prepareStatement("insert into usuario (nombre, "
-                        + "apellido, tipo_usuario, login_name, contrasenha) values (?,?,?,?,?)");
+                        + "apellido, tipo_usuario, login_name, contrasenha) values (?,?,?,?,md5(?))");
                 pstmt.setInt(1, u.getId_usuario());
                 pstmt.setString(2, u.getNombre());
                 pstmt.setString(3, u.getApellido());
@@ -141,7 +141,7 @@ public class UsuarioManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("select id_cliente, nombre, apellido,"
-                    + "Tipo_usuario, login_name from cliente");
+                    + "Tipo_usuario, login_name from usuario");
             rs = pstmt.executeQuery(); //Se obtiene la lista que esta en el select.
             while (rs.next()) {
                 Usuario usuario = new Usuario();
@@ -159,34 +159,33 @@ public class UsuarioManager {
         }
         return retValue;
     }
-
-    public int login_usuario(String login_name, String Contrasenha) throws Exception {
-        int retValue = 4;
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
+    
+    public Usuario login_usuario(String loginName, String passwd) throws SQLException {
+        Usuario retorno = null;
         try {
-            conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select * from cliente where login_name = ? and Contrasenha = ?");
-            pstmt.setString(1, login_name);
-            pstmt.setString(2, Contrasenha);
-            rs = pstmt.executeQuery();
+            Connection c = ConexionBD.getConnection();
+            PreparedStatement pstmt = c.prepareStatement("SELECT * FROM usuario WHERE login_name = ? AND Contrasenha = md5(?)");
+            pstmt.setString(1, loginName);
+            pstmt.setString(2, passwd);
+            ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                
-                if ("Administrador" == rs.getString(1) && Contrasenha.equals(rs.getString(2).trim())) {
-                    retValue = 1; //Es el administrador.
-                } else {
-                    retValue = 2; //Es un usuario normal.
-                }
+                Usuario u = new Usuario();
+                u.setId_usuario(rs.getInt("id"));
+                u.setNombre(rs.getString("nombre"));
+                u.setApellido(rs.getString("apellido"));
+                u.setlogin_name(rs.getString("login_name"));
+                u.setContrasenha(rs.getString(5));
+                u.setTipo_usuario(rs.getInt(6));
+                retorno = u;
             }
-
-        } catch (SQLException ex) {
-            retValue = 3;
+            rs.close();
+            pstmt.close();
+            ConexionBD.closeConnection(c);
+            return retorno;
+        } catch (Exception ex) {
             Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            ConexionBD.closeConnection(conn);
+            return retorno;
         }
-        return retValue;
     }
+    
 }

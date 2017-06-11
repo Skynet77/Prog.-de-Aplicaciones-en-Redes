@@ -28,9 +28,9 @@ public class CategoriaManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("insert into categoria (id_categoria, nombre) values (?,?)");
+            pstmt = conn.prepareStatement("insert into categoria (id_categoria, descripcion) values (?,?)");
             pstmt.setInt(1, c.getId_categoria());
-            pstmt.setString(2, c.getNombre());
+            pstmt.setString(2, c.getDescripcion());
             pstmt.execute();
 
         } catch (SQLException ex) {
@@ -58,8 +58,8 @@ public class CategoriaManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("update categoria set nombre = ? where id_categoria = ?");
-            pstmt.setString(1, c.getNombre());
+            pstmt = conn.prepareStatement("update categoria set descripcion = ? where id_categoria = ?");
+            pstmt.setString(1, c.getDescripcion());
             pstmt.setInt(2, c.getId_categoria());
             pstmt.execute();
 
@@ -104,13 +104,13 @@ public class CategoriaManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select nombre from categoria where id_categoria = ?");
+            pstmt = conn.prepareStatement("select descripcion from categoria where id_categoria = ?");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 retValue = new Categoria();
                 retValue.setId_categoria(id);
-                retValue.setNombre(rs.getString(1));
+                retValue.setDescripcion(rs.getString(1));
             }
 
         } catch (SQLException ex) {
@@ -131,12 +131,12 @@ public class CategoriaManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_categoria, nombre from categoria");
+            pstmt = conn.prepareStatement("select id_categoria, descripcion from categoria");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Categoria c = new Categoria();
                 c.setId_categoria(rs.getInt(1));
-                c.setNombre(rs.getString(2));
+                c.setDescripcion(rs.getString(2));
                 retValue.add(c);
             }
 

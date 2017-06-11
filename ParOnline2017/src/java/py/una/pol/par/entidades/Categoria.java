@@ -10,15 +10,15 @@ package py.una.pol.par.entidades;
  */
 
 public class Categoria {
-        private int id_categoria;
-    private String nombre;
+    private int id_categoria;
+    private String descripcion;
 
     public Categoria() {
     }
 
-    public Categoria(int id_categoria, String nombre) {
+    public Categoria(int id_categoria, String descripcion) {
         this.id_categoria = id_categoria;
-        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public int getId_categoria() {
@@ -29,16 +29,16 @@ public class Categoria {
         this.id_categoria = id_categoria;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public String toString() {
-        return "Categoria{" + "id_categoria=" + id_categoria + ", nombre=" + nombre + '}';
+        return "Categoria{" + "id_categoria=" + id_categoria + ", descripcion=" + descripcion + '}';
     }
 }

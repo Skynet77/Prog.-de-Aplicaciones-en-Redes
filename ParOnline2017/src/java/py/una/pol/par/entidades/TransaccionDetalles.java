@@ -14,8 +14,8 @@ public class TransaccionDetalles {
     private TransaccionCabecera carrito;
     private Producto producto;
     private int cantidad;
+    private int precio;
     private int subtotal;
-    private int id_contenido;
 
     public TransaccionDetalles() {
     }
@@ -26,12 +26,12 @@ public class TransaccionDetalles {
         this.cantidad = cantidad;
     }
 
-    public int getId_contenido() {
-        return id_contenido;
+    public int getPrecio() {
+        return precio;
     }
 
-    public void setId_contenido(int id_contenido) {
-        this.id_contenido = id_contenido;
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 
     public int getSubtotal() {

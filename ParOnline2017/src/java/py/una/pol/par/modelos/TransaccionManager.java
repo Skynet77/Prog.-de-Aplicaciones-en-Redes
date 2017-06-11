@@ -35,7 +35,7 @@ public class TransaccionManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("insert into transaccionesCab (id_cliente, "
-                    + "monto_total, direccion, forma_pago, fecha) values (?,?,?,?,?)");
+                    + "monto_total, direccion_envio, id_medio_pago, fecha) values (?,?,?,?,?)");
             pstmt.setInt(1, c.getUsuario().getId_usuario());
             pstmt.setInt(2, c.getTotal_a_pagar());
             pstmt.setString(3, c.getDireccion());
@@ -51,7 +51,7 @@ public class TransaccionManager {
             for (TransaccionDetalles con : c.getContenido()) {
                 pstmt1 = conn.prepareStatement("insert into transaccionesDet(id_transaccion,"
                         + " id_producto, cantidad, precio, subtotal) values (?,?,?,?,?)");
-                pstmt1.setInt(1, secuen);
+                pstmt1.setInt(1, secuen); // VER!!!!!!
                 pstmt1.setInt(2, con.getProductos().getId_producto());
                 pstmt1.setInt(3, con.getCantidad());
                 pstmt1.setInt(4, con.getSubtotal());
@@ -76,15 +76,15 @@ public class TransaccionManager {
         return retValue;
     }
 
-    public boolean update(TransaccionCabecera c) throws Exception {
+    public boolean actualizar(TransaccionCabecera c) throws Exception {
         boolean retValue = true;
         Connection conn = null;
         PreparedStatement pstmt = null;
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("update carrito set id_cliente = ?,"
-                    + "monto_total = ?, direccion = ?, forma_pago = ?, fecha = ? where id_carrito = ?");
+            pstmt = conn.prepareStatement("update transaccionesCab set id_cliente = ?,"
+                    + "monto_total = ?, direccion = ?, forma_pago = ?, fecha = ? where id_transaccion = ?");
             pstmt.setInt(1, c.getUsuario().getId_usuario());
             pstmt.setInt(2, c.getTotal_a_pagar());
             pstmt.setString(3, c.getDireccion());
@@ -101,7 +101,7 @@ public class TransaccionManager {
         return retValue;
     }
 
-    public boolean delete(TransaccionCabecera tc) throws Exception {
+    public boolean borrar(TransaccionCabecera tc) throws Exception {
         boolean retValue = true;
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -168,7 +168,7 @@ public class TransaccionManager {
                     contenido.setCarrito(carrito);
                     contenido.setSubtotal(rs1.getInt(4));
                     contenido.setProductos(pm.getProductoById(rs1.getInt(2)));
-                    contenido.setId_contenido(rs1.getInt(5));
+                    contenido.setPrecio(rs1.getInt(5));
                     contenidos.add(contenido);
                 }
                 //guarda la lista de contenidos relacionados a un carrito
@@ -200,8 +200,8 @@ public class TransaccionManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_carrito, id_cliente, monto_total, direccion, forma_pago"
-                    + " from transaccionesCab");
+            pstmt = conn.prepareStatement("select id_transaccion, id_cliente, monto_total, direccion, forma_pago"
+                    + ", nro_tarjeta, estado from transaccionesCab");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 TransaccionCabecera c = new TransaccionCabecera();
@@ -210,6 +210,8 @@ public class TransaccionManager {
                 c.setTotal_a_pagar(rs.getInt(3));
                 c.setDireccion(rs.getString(4));
                 c.setForma_pago(rs.getString(5));
+                c.setNro_tarjeta(rs.getInt(6));
+                c.setEstado(rs.getString(7));
                 retValue.add(c);
             }
         } catch (SQLException ex) {
