@@ -16,7 +16,7 @@ import py.una.pol.par.entidades.Producto;
 import py.una.pol.par.utilidades.ConexionBD;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class ProductoManager {
@@ -27,12 +27,13 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
-            pstmt = conn.prepareStatement("insert into producto (id_producto, id_categoria, precio, descripcion) "
-                    + "values (?,?,?,?)");
+            pstmt = conn.prepareStatement("insert into producto (id_producto, "
+                    + "id_categoria, precio, descripcion, cantidad) values (?,?,?,?,?)");
             pstmt.setInt(1, p.getId_producto());
             pstmt.setInt(2, p.get_categoria().getId_categoria());
             pstmt.setInt(3, p.getPrecio());
             pstmt.setString(4, p.getDescripcion());
+            pstmt.setInt(5, p.getCantidad());
             pstmt.execute(); //Se ejecuta la sentencia sql.
         } catch (SQLException ex) {
             retValue = false;
@@ -58,11 +59,12 @@ public class ProductoManager {
         try {
             conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
             pstmt = conn.prepareStatement("update producto set precio = ?, "
-                    + "descripcion = ?, id_categoria = ?   where id_producto = ? ");
+                    + "descripcion = ?, id_categoria = ?, cantidad = ? where id_producto = ? ");
             pstmt.setInt(1, p.getPrecio());
             pstmt.setString(2, p.getDescripcion());
             pstmt.setInt(3, p.get_categoria().getId_categoria());
-            pstmt.setInt(4, p.getId_producto());
+            pstmt.setInt(4, p.getCantidad());
+            pstmt.setInt(5, p.getId_producto());
             pstmt.execute(); //Se ejecuta la sentencia sql.
         } catch (SQLException ex) {
             retValue = false;
@@ -102,15 +104,17 @@ public class ProductoManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("select id_producto, descripcion, id_categoria, precio"
-                    + " from producto where descripcion = ?");
+                    + ", cantidad from producto where descripcion = ?");
             pstmt.setString(1, nombre);
             rs = pstmt.executeQuery(); //un objto que puede soportar una tabla de resultado ejecutar consulta
             if (rs.next()) {
                 producto = new Producto();
                 producto.setId_producto(rs.getInt(1));
                 producto.setDescripcion(rs.getString(2));
-                producto.setPrecio(rs.getInt(4));
                 producto.set_categoria(cc.getCategoriaById(rs.getInt(3)));
+                producto.setPrecio(rs.getInt(4));
+                producto.setCantidad(rs.getInt(5));
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,8 +133,8 @@ public class ProductoManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_producto, id_categoria, precio, descripcion "
-                    + "from producto");
+            pstmt = conn.prepareStatement("select id_producto, id_categoria, precio, descripcion, "
+                    + " cantidad from producto");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Producto p = new Producto();
@@ -138,6 +142,7 @@ public class ProductoManager {
                 p.set_categoria(cc.getCategoriaById(rs.getInt(2)));
                 p.setPrecio(rs.getInt(3));
                 p.setDescripcion(rs.getString(4));
+                p.setCantidad(rs.getInt(5));
                 retValue.add(p);
             }
         } catch (SQLException ex) {
@@ -158,15 +163,16 @@ public class ProductoManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("select id_producto, descripcion, id_categoria, precio"
-                    + " from producto where id_producto = ?");
+                    + ", cantidad from producto where id_producto = ?");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery(); //un objto que puede soportar una tabla de resultado ejecutar consulta
             if (rs.next()) {
                 producto = new Producto();
                 producto.setId_producto(rs.getInt(1));
                 producto.setDescripcion(rs.getString(2));
-                producto.setPrecio(rs.getInt(4));
                 producto.set_categoria(cc.getCategoriaById(rs.getInt(3)));
+                producto.setPrecio(rs.getInt(4));
+                producto.setCantidad(rs.getInt(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,15 +193,16 @@ public class ProductoManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("select id_producto, descripcion, id_categoria, precio"
-                    + " from producto where id_categoria = ?");
+                    + ", cantidad from producto where id_categoria = ?");
             pstmt.setInt(1, categoria);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Producto c = new Producto();
                 c.setId_producto(rs.getInt(1));
                 c.setDescripcion(rs.getString(2));
-                c.setPrecio(rs.getInt(4));
                 c.set_categoria(cc.getCategoriaById(rs.getInt(3)));
+                c.setPrecio(rs.getInt(4));
+                c.setCantidad(rs.getInt(5));
                 retValue.add(c);
             }
         } catch (SQLException ex) {

@@ -10,25 +10,25 @@ import java.util.logging.Logger;
 import py.una.pol.par.modelos.UsuarioManager;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class Usuario {
     private int id_usuario;
     private String nombre;
     private String apellido;
-    private String tipoUsuario;
-    private String aliasUsuario;
-    private String pass;
+    private int tipo_usuario;
+    private String login_name;
+    private String contrasenha;
     
 
-    public Usuario(int id_usuario, String nombre, String apellido, String tipoUsuario, String aliasUsuario, String pass) {
+    public Usuario(int id_usuario, String nombre, String apellido, int tipo_usuario, String login_name, String pass) {
         this.id_usuario = id_usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoUsuario = tipoUsuario;
-        this.aliasUsuario = aliasUsuario;
-        this.pass = pass;
+        this.tipo_usuario = tipo_usuario;
+        this.login_name = login_name;
+        this.contrasenha = pass;
     }
     
     public Usuario() {
@@ -58,28 +58,28 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public int getTipo_usuario() {
+        return tipo_usuario;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setTipo_usuario(int tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
     }
 
-    public String getaliasUsuario(){
-        return aliasUsuario;
+    public String getlogin_name(){
+        return login_name;
     }
     
-    public void setaliasUsuario(String aliasUsuario){
-        this.aliasUsuario = aliasUsuario;
+    public void setlogin_name(String login_name){
+        this.login_name = login_name;
     }
     
-    public String getPass() {
-        return pass;
+    public String getContrasenha() {
+        return contrasenha;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setContrasenha(String contrasenha) {
+        this.contrasenha = contrasenha;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class Usuario {
         } catch (Exception ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "Señor/ra: " + u.getNombre().toUpperCase() + "," + u.getApellido().toUpperCase();
+        return "Cliente: " + u.getNombre().toUpperCase() + "," + u.getApellido().toUpperCase();
     }
     
 }

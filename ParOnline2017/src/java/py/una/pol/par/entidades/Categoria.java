@@ -6,7 +6,7 @@
 package py.una.pol.par.entidades;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class Categoria {

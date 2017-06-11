@@ -6,33 +6,34 @@
 package py.una.pol.par.utilidades;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class ConexionBD {
-    public static Connection getConnection() throws SQLException {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+
+    public static Connection getConnection()throws SQLException, ClassNotFoundException, NamingException, Exception{
+        Connection conexion = null;
+        InitialContext cxt = new InitialContext();
+        if ( cxt == null ) {
+            throw new Exception("Uh oh -- no context!");
         }
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/paronline", "postgres", "skynet77");
-        return conn;
+
+        DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
+
+        if ( ds == null ) {
+            throw new Exception("Data source not found!");
+        }
+        conexion = ds.getConnection();
+        return conexion;
     }
     
-    public static void closeConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public static void closeConnection(Connection conexion)throws SQLException, ClassNotFoundException{
+        conexion.close();
     }
 }

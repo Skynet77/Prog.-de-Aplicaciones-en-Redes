@@ -16,7 +16,7 @@ import py.una.pol.par.utilidades.ConexionBD;
 import py.una.pol.par.entidades.Usuario;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class UsuarioManager {
@@ -30,14 +30,14 @@ public class UsuarioManager {
         if (usuario == null) {
             try {
                 conn = ConexionBD.getConnection(); //Se abre la conexion con la bd.
-                pstmt = conn.prepareStatement("insert into usuario (cedula, nombre, "
-                        + "apellido, tipoUsuario, aliasUsuario, pass) values (?,?,?,?)");
+                pstmt = conn.prepareStatement("insert into usuario (nombre, "
+                        + "apellido, tipo_usuario, login_name, contrasenha) values (?,?,?,?,?)");
                 pstmt.setInt(1, u.getId_usuario());
                 pstmt.setString(2, u.getNombre());
                 pstmt.setString(3, u.getApellido());
-                pstmt.setString(4, u.getTipoUsuario());
-                pstmt.setString(5, u.getaliasUsuario());
-                pstmt.setString(6, u.getPass());
+                pstmt.setInt(4, u.getTipo_usuario());
+                pstmt.setString(5, u.getlogin_name());
+                pstmt.setString(6, u.getContrasenha());
                 pstmt.execute(); //Se ejecuta la sentencia sql.
             } catch (SQLException ex) {
                 retValue = false;
@@ -69,9 +69,9 @@ public class UsuarioManager {
                     + "apellido = ?, tipoUsuario = ?, aliasUsuario = ?, pass = ?  where id_cliente = ? ");
             pstmt.setString(1, u.getNombre());
             pstmt.setString(2, u.getApellido());
-            pstmt.setString(3, u.getTipoUsuario());
-            pstmt.setString(4, u.getaliasUsuario());
-            pstmt.setString(5, u.getPass());
+            pstmt.setInt(3, u.getTipo_usuario());
+            pstmt.setString(4, u.getlogin_name());
+            pstmt.setString(5, u.getContrasenha());
             pstmt.setInt(6, u.getId_usuario());
             pstmt.execute(); //Se ejecuta la sentencia sql.
         } catch (SQLException ex) {
@@ -110,8 +110,8 @@ public class UsuarioManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select nombre, apellido, tipoUsuario, aliasUsuario, pass"
-                    + " from usuario where id_cliente = ?");
+            pstmt = conn.prepareStatement("select nombre, apellido, tipo_usuario,"
+                    + "login_name from usuario where id_cliente = ?");
             pstmt.setInt(1, id_usuario);
             rs = pstmt.executeQuery(); //Se obtiene la lista que esta en el select.
 
@@ -120,9 +120,8 @@ public class UsuarioManager {
                 usuario.setId_usuario(id_usuario);
                 usuario.setNombre(rs.getString(1));
                 usuario.setApellido(rs.getString(2));
-                usuario.setTipoUsuario(rs.getString(3));
-                usuario.setaliasUsuario(rs.getString(4));
-                usuario.setPass(rs.getString(5));
+                usuario.setTipo_usuario(rs.getInt(3));
+                usuario.setlogin_name(rs.getString(4));
 
             }
         } catch (SQLException ex) {
@@ -141,17 +140,16 @@ public class UsuarioManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select id_cliente, cedula, nombre, apellido,"
-                    + "pass from cliente");
+            pstmt = conn.prepareStatement("select id_cliente, nombre, apellido,"
+                    + "Tipo_usuario, login_name from cliente");
             rs = pstmt.executeQuery(); //Se obtiene la lista que esta en el select.
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId_usuario(rs.getInt(1));
                 usuario.setNombre(rs.getString(2));
                 usuario.setApellido(rs.getString(3));
-                usuario.setTipoUsuario(rs.getString(4));
-                usuario.setaliasUsuario(rs.getString(5));
-                usuario.setPass(rs.getString(6));
+                usuario.setTipo_usuario(rs.getInt(4));
+                usuario.setlogin_name(rs.getString(5));
                 retValue.add(usuario);
             }
         } catch (SQLException ex) {
@@ -162,7 +160,7 @@ public class UsuarioManager {
         return retValue;
     }
 
-    public int login_usuario(String aliasUsuario, String pass) throws Exception {
+    public int login_usuario(String login_name, String Contrasenha) throws Exception {
         int retValue = 4;
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -170,13 +168,13 @@ public class UsuarioManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("select * from cliente where aliasUsuario = ? and pass = ?");
-            pstmt.setString(1, aliasUsuario);
-            pstmt.setString(2, pass);
+            pstmt = conn.prepareStatement("select * from cliente where login_name = ? and Contrasenha = ?");
+            pstmt.setString(1, login_name);
+            pstmt.setString(2, Contrasenha);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 
-                if ("Administrador" == rs.getString(1) && pass.equals(rs.getString(2).trim())) {
+                if ("Administrador" == rs.getString(1) && Contrasenha.equals(rs.getString(2).trim())) {
                     retValue = 1; //Es el administrador.
                 } else {
                     retValue = 2; //Es un usuario normal.

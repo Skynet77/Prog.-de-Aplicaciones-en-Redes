@@ -17,7 +17,7 @@ import py.una.pol.par.utilidades.ConexionBD;
 
 /**
  *
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class CategoriaManager {

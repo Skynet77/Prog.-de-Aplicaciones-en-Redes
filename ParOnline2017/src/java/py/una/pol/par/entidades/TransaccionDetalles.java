@@ -7,14 +7,14 @@
 package py.una.pol.par.entidades;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class TransaccionDetalles {
     private TransaccionCabecera carrito;
     private Producto producto;
     private int cantidad;
-    private int monto_total;
+    private int subtotal;
     private int id_contenido;
 
     public TransaccionDetalles() {
@@ -34,12 +34,12 @@ public class TransaccionDetalles {
         this.id_contenido = id_contenido;
     }
 
-    public int getMonto_total() {
-        return monto_total;
+    public int getSubtotal() {
+        return subtotal;
     }
 
-    public void setMonto_total(int monto_total) {
-        this.monto_total = monto_total;
+    public void setSubtotal(int subtotal) {
+        this.subtotal = subtotal;
     }
 
     public TransaccionCabecera getCarrito() {

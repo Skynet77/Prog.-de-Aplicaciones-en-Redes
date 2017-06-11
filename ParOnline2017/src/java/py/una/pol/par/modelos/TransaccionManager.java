@@ -19,7 +19,7 @@ import py.una.pol.par.entidades.TransaccionDetalles;
 import py.una.pol.par.entidades.Usuario;
 
 /*
- * @author José Alvarez y Belén Desvars
+ * @author José Alvarez
  */
 
 public class TransaccionManager {
@@ -34,7 +34,7 @@ public class TransaccionManager {
 
         try {
             conn = ConexionBD.getConnection();
-            pstmt = conn.prepareStatement("insert into carrito (id_cliente, "
+            pstmt = conn.prepareStatement("insert into transaccionesCab (id_cliente, "
                     + "monto_total, direccion, forma_pago, fecha) values (?,?,?,?,?)");
             pstmt.setInt(1, c.getUsuario().getId_usuario());
             pstmt.setInt(2, c.getTotal_a_pagar());
@@ -42,19 +42,19 @@ public class TransaccionManager {
             pstmt.setString(4, c.getForma_pago());
             pstmt.setString(5, c.getFecha());
             pstmt.execute();
-            pstmt2 = conn.prepareStatement("select last_value from secuencia_carri"); //Retorna la ultima secuencia del carrito.
+/*            pstmt2 = conn.prepareStatement("select last_value from secuencia_carri"); //Retorna la ultima secuencia del carrito.
             rs = pstmt2.executeQuery();
             if (rs.next()) {
                 secuen = rs.getInt(1);
-            }
+            }*/
             //insertar la lista de contenido
             for (TransaccionDetalles con : c.getContenido()) {
-                pstmt1 = conn.prepareStatement("insert into contenido_carrito(id_carrito,"
-                        + " id_producto, cantidad, precio_cantidad) values (?,?,?,?)");
+                pstmt1 = conn.prepareStatement("insert into transaccionesDet(id_transaccion,"
+                        + " id_producto, cantidad, precio, subtotal) values (?,?,?,?,?)");
                 pstmt1.setInt(1, secuen);
                 pstmt1.setInt(2, con.getProductos().getId_producto());
                 pstmt1.setInt(3, con.getCantidad());
-                pstmt1.setInt(4, con.getMonto_total());
+                pstmt1.setInt(4, con.getSubtotal());
                 pstmt1.execute();
                 pstmt1.close();
             }
@@ -166,7 +166,7 @@ public class TransaccionManager {
                 while (rs1.next()) {
                     contenido.setCantidad(rs1.getInt(3));
                     contenido.setCarrito(carrito);
-                    contenido.setMonto_total(rs1.getInt(4));
+                    contenido.setSubtotal(rs1.getInt(4));
                     contenido.setProductos(pm.getProductoById(rs1.getInt(2)));
                     contenido.setId_contenido(rs1.getInt(5));
                     contenidos.add(contenido);
@@ -201,7 +201,7 @@ public class TransaccionManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("select id_carrito, id_cliente, monto_total, direccion, forma_pago"
-                    + " from carrito");
+                    + " from transaccionesCab");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 TransaccionCabecera c = new TransaccionCabecera();
