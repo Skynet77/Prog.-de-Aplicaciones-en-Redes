@@ -18,14 +18,12 @@ import javax.servlet.http.HttpSession;
 import py.una.pol.par.entidades.Producto;
 import py.una.pol.par.modelos.ProductoManager;
 import py.una.pol.par.entidades.Usuario;
-import py.una.pol.par.entidades.TransaccionCabecera;
-import py.una.pol.par.entidades.TransaccionDetalles;
 
 /*
  * @author Skynet
  */
 
-public class TransaccionServlet extends HttpServlet {
+public class TransaccionABMServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -143,7 +141,7 @@ public class TransaccionServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TransaccionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransaccionABMServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -161,7 +159,7 @@ public class TransaccionServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TransaccionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TransaccionABMServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
