@@ -55,7 +55,7 @@
                         <td><%=p3.getPrecio()%></td>
                         <td>
                              <form action="/ParOnline/TransaccionABMServlet" method="post">
-                                <input type="hidden" name="accion" value="agregar_carrito"/>
+                                <input type="hidden" name="vaccion" value="agregar_carrito"/>
                                 <input type="hidden" name="vid" value="<%=p3.getId_producto()%>"/>
                                 <input type="submit" value="Añadir al carrito"/>
                             </form></td>
