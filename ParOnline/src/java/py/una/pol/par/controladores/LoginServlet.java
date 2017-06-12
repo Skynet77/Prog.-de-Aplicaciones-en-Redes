@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
                 } else { //Es un usuario incorrecto que no esta en la base de datos o es un usuario "" vacio.
                     mensaje = "incorrecto";
                     request.setAttribute("mensaje", mensaje);
-                    RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
+                    RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp"); 
                     if (rd != null) {
                         rd.forward(request, response);
                     }
@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
                 if (um.es_usuario(login_name, contrasenha) == 2) { //Es un usuario incorrecto.
                     mensaje = "incorrecto";
                     request.setAttribute("mensaje", mensaje);
-                    RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
                     if (rd != null) {
                         rd.forward(request, response);
                     }
@@ -104,7 +104,7 @@ public class LoginServlet extends HttpServlet {
                 } else {
                     mensaje = "logueado";
                     request.setAttribute("mensaje", mensaje);
-                    RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
+                    RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp"); 
                     if (rd != null) {
                         rd.forward(request, response);
                     }

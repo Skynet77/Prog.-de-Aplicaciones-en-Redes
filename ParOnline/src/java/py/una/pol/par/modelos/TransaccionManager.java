@@ -35,13 +35,12 @@ public class TransaccionManager {
         try {
             conn = ConexionBD.getConnection();
             pstmt = conn.prepareStatement("insert into transaccionesCab (id_cliente, "
-                    + "total, direccion_envio, id_medio_pago, fecha) values (?,?,?,?,?)");
+                    + "monto_total, direccion_envio, id_medio_pago, fecha) values (?,?,?,?,?)");
             pstmt.setInt(1, c.getUsuario().getId_usuario());
             pstmt.setInt(2, c.getTotal_a_pagar());
             pstmt.setString(3, c.getDireccion());
             pstmt.setString(4, c.getForma_pago());
             pstmt.setString(5, c.getFecha());
-            
             pstmt.execute();
 /*            pstmt2 = conn.prepareStatement("select last_value from secuencia_carri"); //Retorna la ultima secuencia del carrito.
             rs = pstmt2.executeQuery();
