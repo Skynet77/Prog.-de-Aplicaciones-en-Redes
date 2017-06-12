@@ -7,12 +7,6 @@
             <file>file:/C:/Users/Skynet/Documents/NetBeansProjects/WebPar2017/web/index.html</file>
             <file>file:/C:/Users/Skynet/Documents/NetBeansProjects/WebPar2017/web/busqueda.html</file>
         </group>
-        <group>
-            <file>file:/C:/Users/Skynet/Prog.-de-Aplicaciones-en-Redes/ParOnline2017/src/java/py/una/pol/par/controladores/LoginServlet.java</file>
-            <file>file:/C:/Users/Skynet/Prog.-de-Aplicaciones-en-Redes/ParOnline2017/src/java/py/una/pol/par/controladores/TransaccionServlet.java</file>
-            <file>file:/C:/Users/Skynet/Prog.-de-Aplicaciones-en-Redes/ParOnline2017/src/java/py/una/pol/par/controladores/UsuarioABMServlet.java</file>
-            <file>file:/C:/Users/Skynet/Prog.-de-Aplicaciones-en-Redes/ParOnline2017/src/java/py/una/pol/par/controladores/CategoriaABMServlet.java</file>
-            <file>file:/C:/Users/Skynet/Prog.-de-Aplicaciones-en-Redes/ParOnline2017/src/java/py/una/pol/par/modelos/UsuarioManager.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
