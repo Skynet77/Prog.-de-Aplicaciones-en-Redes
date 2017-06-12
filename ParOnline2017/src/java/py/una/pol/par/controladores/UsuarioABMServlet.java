@@ -6,7 +6,6 @@
 package py.una.pol.par.controladores;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,15 +43,16 @@ public class UsuarioABMServlet extends HttpServlet {
         UsuarioManager um = new UsuarioManager();
         usuario = null;
         int id = 0;
-        int cedula = 0;
+        String login_name = null;
         String nombre = null;
         String apellido = null;
-        String pass = null;
+        String contrasenha = null;
+        int tipo_usuario = 2;
 
         if (vaccion == null) {
             //modo grilla...se muestran todos los registros
-            ArrayList<Usuario> usuario = um.getAll();
-            request.setAttribute("usuarios", usuario);
+            ArrayList<Usuario> usuarios = um.getAll();
+            request.setAttribute("usuarios", usuarios);
 
             RequestDispatcher rd = request.getRequestDispatcher("/Usuarios.jsp");
             if (rd != null) {
@@ -68,7 +68,7 @@ public class UsuarioABMServlet extends HttpServlet {
             um.eliminar(usuario);
 
             ArrayList<Usuario> usuarios = um.getAll();
-            request.setAttribute("usuarios", usuario);
+            request.setAttribute("usuarios", usuarios);
             RequestDispatcher rd = request.getRequestDispatcher("/Usuarios.jsp");
 
             if (rd != null) {
@@ -78,10 +78,10 @@ public class UsuarioABMServlet extends HttpServlet {
 
         if ("Grabar".equals(vaccion)) {
             //id = Integer.valueOf(request.getParameter("id_cli"));
-            cedula = Integer.valueOf(request.getParameter("cedula"));
+            login_name = request.getParameter("login_name");
             nombre = request.getParameter("nombre");
             apellido = request.getParameter("apellido");
-            pass = request.getParameter("pass");
+            contrasenha = request.getParameter("contrasenha");
             usuario = new Usuario();
 
             //debo ver si en la sesion esta el admin o un desconocido y mandarlo al index
@@ -90,15 +90,15 @@ public class UsuarioABMServlet extends HttpServlet {
                 usuario = (Usuario) sesion.getAttribute("usuario");
 
                 //si esta el admin debo mandarlo al listado porque esta agregando clientes
-                if (um.login_usuario(usuario.getlogin_name(), usuario.getContrasenha()) == 1) { //El administrador le registra a un cliente.
-                    cliente.setApellido(apellido);
-                    cliente.setCedula(cedula);
-                    cliente.setNombre(nombre);
-                    cliente.setPass(pass);
+                if (um.es_usuario(usuario.getlogin_name(), usuario.getContrasenha()) == 1) { //El administrador le registra a un cliente.
+                    usuario.setApellido(apellido);
+                    usuario.setlogin_name(login_name);
+                    usuario.setNombre(nombre);
+                    usuario.setContrasenha(contrasenha);
 
-                    clc.insertar(cliente);
+                    um.insertar(usuario);
 
-                    ArrayList<Cliente> clientes = clc.getAll();
+                    ArrayList<Usuario> clientes = um.getAll();
                     request.setAttribute("clientes", clientes);
 
                     RequestDispatcher rd = request.getRequestDispatcher("/Clientes.jsp");
@@ -106,17 +106,17 @@ public class UsuarioABMServlet extends HttpServlet {
                         rd.forward(request, response);
                     }
                     //si no, es un desconocido debo cambiar el usuario cargado en la sesion
-                } else if (clc.is_usuario(usuario.getCedula(), usuario.getPass()) == 2) { //EL usuario desconocido se registra solo.
+                } else if (um.es_usuario(usuario.getlogin_name(), usuario.getContrasenha()) == 2) { //EL usuario desconocido se registra solo.
                     //sesion.invalidate();
-                    cliente.setApellido(apellido);
-                    cliente.setCedula(cedula);
-                    cliente.setId_cliente(id);
-                    cliente.setNombre(nombre);
-                    cliente.setPass(pass);
+                    usuario.setApellido(apellido);
+                    usuario.setlogin_name(login_name);
+                    usuario.setId_usuario(id);
+                    usuario.setNombre(nombre);
+                    usuario.setContrasenha(contrasenha);
                     Usuario usuario_nuevo = new Usuario();
-                    usuario_nuevo.setCedula(cedula);
-                    usuario_nuevo.setPass(pass);
-                    clc.insertar(cliente);
+                    usuario_nuevo.setlogin_name(login_name);
+                    usuario_nuevo.setContrasenha(contrasenha);
+                    um.insertar(usuario);
 
                     sesion.setAttribute("usuario", usuario_nuevo);
 
@@ -127,17 +127,17 @@ public class UsuarioABMServlet extends HttpServlet {
                 }
             } else if (request.getSession().getAttribute("usuario") == null) { //Si el usuario se quiere registrar por primera vez.
 
-                cliente.setApellido(apellido);
-                cliente.setCedula(cedula);
-                cliente.setId_cliente(id);
-                cliente.setNombre(nombre);
-                cliente.setPass(pass);
+                usuario.setApellido(apellido);
+                usuario.setlogin_name(login_name);
+                usuario.setId_usuario(id);
+                usuario.setNombre(nombre);
+                usuario.setContrasenha(contrasenha);
 
                 Usuario usuario_nuevo = new Usuario();
-                usuario_nuevo.setCedula(cedula);
-                usuario_nuevo.setPass(pass);
+                usuario_nuevo.setlogin_name(login_name);
+                usuario_nuevo.setContrasenha(contrasenha);
 
-                if (clc.insertar(cliente)) {
+                if (um.insertar(usuario)) {
                     sesion.setAttribute("usuario", usuario_nuevo);
                     RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
                     if (rd != null) {
@@ -159,10 +159,10 @@ public class UsuarioABMServlet extends HttpServlet {
 
         if ("Editar".equals(vaccion)) {
             int idCli = Integer.valueOf(request.getParameter("vid"));
-            ArrayList<Cliente> clientes = clc.getAll();
-            for (Cliente c : clientes) {
-                if (c.getId_cliente() == idCli) {
-                    request.setAttribute("cliente", c);
+            ArrayList<Usuario> clientes = um.getAll();
+            for (Usuario u : clientes) {
+                if (u.getId_usuario() == idCli) {
+                    request.setAttribute("cliente", u);
                 }
             }
 
@@ -177,15 +177,15 @@ public class UsuarioABMServlet extends HttpServlet {
             login_name = request.getParameter("login_name");
             nombre = request.getParameter("nombre");
             apellido = request.getParameter("apellido");
-            pass = request.getParameter("contraseña");
+            contrasenha = request.getParameter("contraseña");
             usuario = new Usuario();
 
             // ver que pasa si no existe categoria
             usuario.setApellido(apellido);
             usuario.setlogin_name(login_name);
-            usuario.setId_usuario(id_usuario);
+            usuario.setId_usuario(id);
             usuario.setNombre(nombre);
-            usuario.setContrasenha(pass);
+            usuario.setContrasenha(contrasenha);
 
             um.actualizar(usuario);
 
