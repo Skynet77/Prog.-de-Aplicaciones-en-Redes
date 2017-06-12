@@ -98,7 +98,7 @@ public class TransaccionABMServlet extends HttpServlet {
                         }
                     }
                     hs.setAttribute("carritos", carritos);
-                    RequestDispatcher rd = request.getRequestDispatcher("/Carrito.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/Transaccion/Transaccion.jsp");
                     if (rd != null) {
                         rd.forward(request, response);
                     }
@@ -112,14 +112,14 @@ public class TransaccionABMServlet extends HttpServlet {
                     }
                     System.out.println("despues del for");
                     hs.setAttribute("carritos", carritos);
-                    RequestDispatcher rd = request.getRequestDispatcher("/Carrito.jsp");//alamr al servlet deproducto
+                    RequestDispatcher rd = request.getRequestDispatcher("/Transaccion/Transaccion.jsp");//alamr al servlet deproducto
                     if (rd != null) {
                         rd.forward(request, response);
                     }
                 }
             }
        } else if ("carrito".equals(accion)) {
-            RequestDispatcher rd = request.getRequestDispatcher("/Carrito.jsp");//alamr al servlet deproducto
+            RequestDispatcher rd = request.getRequestDispatcher("/Transaccion/Transaccion.jsp");//alamr al servlet deproducto
             if (rd != null) {
                 rd.forward(request, response);
             }

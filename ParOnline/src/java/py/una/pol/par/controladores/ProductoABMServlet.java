@@ -48,7 +48,7 @@ public class ProductoABMServlet extends HttpServlet {
             ArrayList<Producto> productos = pm.getAll();
             request.setAttribute("productos", productos);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/Productos.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Producto/Producto.jsp");
             if (rd != null) {
                 rd.forward(request, response);
             }
@@ -64,7 +64,7 @@ public class ProductoABMServlet extends HttpServlet {
             ArrayList<Producto> productos = pm.getAll();
             request.setAttribute("productos", productos);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/Productos.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Producto/Producto.jsp");
             if (rd != null) {
                 rd.forward(request, response);
             }
@@ -87,7 +87,7 @@ public class ProductoABMServlet extends HttpServlet {
             ArrayList<Producto> productos = pm.getAll();
             request.setAttribute("productos", productos);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/Productos.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Producto/Producto.jsp");
             if (rd != null) {
                 rd.forward(request, response);
             }
@@ -97,7 +97,7 @@ public class ProductoABMServlet extends HttpServlet {
             int idPro = Integer.valueOf(request.getParameter("vid"));
             Producto pro = pm.getProductoById(idPro);
             request.setAttribute("producto", pro);
-            RequestDispatcher rd = request.getRequestDispatcher("/ProductoEdit.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Producto/ProductoEditar.jsp");
             
             if (rd != null) {
                 rd.forward(request, response);
@@ -117,7 +117,7 @@ public class ProductoABMServlet extends HttpServlet {
             pm.update(pro);
             ArrayList<Producto> productos = pm.getAll();
             request.setAttribute("productos", productos);
-            RequestDispatcher rd = request.getRequestDispatcher("/Productos.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Producto/Producto.jsp");
             
             if (rd != null) {
                 rd.forward(request, response);

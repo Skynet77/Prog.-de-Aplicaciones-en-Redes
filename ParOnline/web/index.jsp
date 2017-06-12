@@ -13,11 +13,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Carrito</title>
+        <title>ParOnline</title>
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
     </head>
     <body>
-        <header><h1 align = "center"> Menú Principal - PAR ONLINE.</h1></header> 
+        <header><h1 align = "center"> Par On Line </h1></header> 
             <jsp:include page="/menu.jsp" flush="true"/>
         <div id='main'>
             <aside>
@@ -95,8 +95,7 @@
                 </table>
             </article>
         </div>
-        <footer align="center">Contactos:<br> Luis Mendez: (0985)-867-966 <br>
-            Analia Riquelme: (0961)-475-337
+        <footer align="center">
         </footer>
     </body>
 </html>

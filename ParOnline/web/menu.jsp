@@ -13,8 +13,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Carrito</title>
-        <link rel="stylesheet" type="text/css" href="vista1.css"/>
+        <title>ParOnline</title>
+        <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
     </head>
     <body>
         <div class="caja1">
@@ -30,9 +30,9 @@
         <div class="caja2">
             <nav class="nav">
                 <ul>
-                    <li><a href="/ParOnline/ProductoServlet?cate=1">Electrodomesticos</a></li>
-                    <li><a href="/ParOnline/ProductoServlet?cate=2">Equipos de Gimnasia</a></li>
-                    <li><a href="/ParOnline/ProductoServlet?cate=3">Insumos Informaticos</a></li>
+                    <li><a href="/ParOnline/ProductoABMServlet?cate=1">Computadoras</a></li>
+                    <li><a href="/ParOnline/ProductoABMServlet?cate=2">Telefonos Moviles</a></li>
+                    <li><a href="/ParOnline/ProductoABMServlet?cate=3">Accesorios p/ computadoras y moviles</a></li>
                     <li><a href="/ParOnline/TransaccionABMServlet?vaccion=carrito">Ir al Carrito</a></li>
                         <%if (request.getSession().getAttribute("usuario") != null) {
                                 Usuario usu = (Usuario) request.getSession().getAttribute("usuario");
@@ -40,19 +40,19 @@
                     <li><a href="/ParOnline/CategoriaABMServlet">Menu Categoria</a>
                         <ul>
                             <li><a href="/ParOnline/CategoriaABMServlet">Listar</a></li>
-                            <li><a href="/ParOnline/CategoriaCrear.jsp">Crear</a></li>
+                            <li><a href="/ParOnline/Categoria/CategoriaCrear.jsp">Crear</a></li>
                         </ul>
                     </li>
-                    <li><a href="/Par_online/ProductoABMServlet">Menu Producto</a>  
+                    <li><a href="/ParOnline/ProductoABMServlet">Menu Producto</a>  
                         <ul>
-                            <li><a href="/Par_online/ProductoABMServlet">Listar</a></li>
-                            <li><a href="/Par_online/ProductoCrear.jsp">Crear</a></li>
+                            <li><a href="/ParOnline/ProductoABMServlet">Listar</a></li>
+                            <li><a href="/ParOnline/Producto/ProductoCrear.jsp">Crear</a></li>
                         </ul>
                     </li>
-                    <li><a href="/Par_online/ClienteABMServlet">Menu Cliente</a>
+                    <li><a href="/ParOnline/UsuarioABMServlet">Menu Cliente</a>
                         <ul>
-                            <li><a href="/Par_online/UsuarioABMServlet">Listar</a></li>
-                            <li><a href="/Par_online/UsuarioCrear.jsp">Crear</a></li>
+                            <li><a href="/ParOnline/UsuarioABMServlet">Listar</a></li>
+                            <li><a href="/ParOnline/Usuario/UsuarioCrear.jsp">Crear</a></li>
                         </ul>
                     </li>
                     <%}

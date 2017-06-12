@@ -111,7 +111,7 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } else if ("registrar".equals(registrar)) {
-            RequestDispatcher rd = request.getRequestDispatcher("/UsuarioCrear.jsp"); 
+            RequestDispatcher rd = request.getRequestDispatcher("/Usuario/UsuarioCrear.jsp"); 
             if (rd != null) {
                 rd.forward(request, response);
             }
