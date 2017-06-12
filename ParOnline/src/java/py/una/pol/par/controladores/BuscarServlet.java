@@ -15,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import py.una.pol.par.entidades.Categoria;
-import py.una.pol.par.modelos.CategoriaManager;
 import py.una.pol.par.entidades.Producto;
 import py.una.pol.par.modelos.ProductoManager;
 
@@ -37,7 +35,7 @@ public class BuscarServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        int cat = 0;
+        int categoria = 0;
         Producto p = new Producto();
         ProductoManager pm = new ProductoManager();
         String filtro_cat = null; //variable para ver que categoria eligio
@@ -79,19 +77,19 @@ public class BuscarServlet extends HttpServlet {
             if (rd != null) {
                 rd.forward(request, response);
             }
-        } else if (request.getParameter("cate") != null) {
-            cat = Integer.valueOf(request.getParameter("cate"));
+        } else if (request.getParameter("categoria") != null) {
+            categoria = Integer.valueOf(request.getParameter("categoria"));
 
-            if (cat == 1) {
-                ArrayList<Producto> productos = pm.getAllByCat(cat);
+            if (categoria == 1) {
+                ArrayList<Producto> productos = pm.getAllByCat(categoria);
                 request.setAttribute("array_producto", productos); //se guarda como atributo de la peticion 
 
-            } else if (cat == 2) {
-                ArrayList<Producto> productos = pm.getAllByCat(cat);
+            } else if (categoria == 2) {
+                ArrayList<Producto> productos = pm.getAllByCat(categoria);
                 request.setAttribute("array_producto", productos);
 
             } else {
-                ArrayList<Producto> productos = pm.getAllByCat(cat);
+                ArrayList<Producto> productos = pm.getAllByCat(categoria);
                 request.setAttribute("array_producto", productos);
 
             }
